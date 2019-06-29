@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using CoreAppHome.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
+using CoreAppHome.Models;
 namespace CoreAppHome
 {
     public class Startup
@@ -35,9 +35,20 @@ namespace CoreAppHome
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+             // Db Service registered in DI
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDbContext<AppHomeDbContext>(options => {
+                options.UseSqlServer(
+                      Configuration.GetConnectionString("AppConnection")
+                    );
+            });
+
+            // Ends here
+
+
             services.AddDefaultIdentity<IdentityUser>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
