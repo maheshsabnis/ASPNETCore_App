@@ -44,7 +44,7 @@ namespace CoreAppHome.Services
         {
             return await ctx.Departments.FindAsync(id);
         }
-
+         
         public async Task<Department> UpdateAsync(int id, Department entity)
         {
             var res = await ctx.Departments.FindAsync(id);
