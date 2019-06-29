@@ -44,7 +44,7 @@ namespace CoreAppHome.Services
         {
             return await ctx.Employees.FindAsync(id);
         }
-
+         
         public async Task<Employee> UpdateAsync(int id, Employee entity)
         {
             var res = await ctx.Employees.FindAsync(id);
