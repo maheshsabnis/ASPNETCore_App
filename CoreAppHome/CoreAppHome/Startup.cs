@@ -14,6 +14,7 @@ using CoreAppHome.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using CoreAppHome.Models;
+using CoreAppHome.Services;
 namespace CoreAppHome
 {
     public class Startup
@@ -52,6 +53,11 @@ namespace CoreAppHome
             services.AddDefaultIdentity<IdentityUser>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+
+            // register custom repo services
+            services.AddScoped<IService<Department, int>, DepartmentService>();
+            // ends here
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
