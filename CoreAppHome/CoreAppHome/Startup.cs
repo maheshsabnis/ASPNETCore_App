@@ -16,7 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using CoreAppHome.Models;
 using CoreAppHome.Services;
 using Newtonsoft.Json.Serialization;
-
+using CoreAppHome.CustomFilter;
 namespace CoreAppHome
 {
     public class Startup
@@ -61,7 +61,8 @@ namespace CoreAppHome
             services.AddScoped<IService<Department, int>, DepartmentService>();
             // ends here
 
-            services.AddMvc()
+            services.AddMvc(options => 
+                    options.Filters.Add(typeof(AppExceptionFilterArribute)))
                 .AddJsonOptions(options => 
                     options.SerializerSettings.ContractResolver
              = new DefaultContractResolver()
@@ -69,7 +70,8 @@ namespace CoreAppHome
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        // This method gets called by the runtime. 
+        // Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
