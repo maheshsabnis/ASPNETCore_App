@@ -51,10 +51,33 @@ namespace CoreAppHome
 
             // Ends here
 
+            // For User Manager only
+            //services.AddDefaultIdentity<IdentityUser>()
+            //    .AddDefaultUI(UIFramework.Bootstrap4)
+            //    .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddDefaultIdentity<IdentityUser>()
+
+            // Service object to Manage Roles and Users
+            services.AddIdentity<IdentityUser,IdentityRole>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            // Ensd Here
+
+
+            // define policies to access the application
+            services.AddAuthorization(options => 
+            {
+                options.AddPolicy("readpolicy", policy =>
+                {
+                    policy.RequireRole("Admin", "Manager", "Clerk");
+                });
+
+                options.AddPolicy("writepolicy", policy =>
+                {
+                    policy.RequireRole("Admin", "Manager");
+                });
+            });
+            //ends here
 
 
             // register custom repo services

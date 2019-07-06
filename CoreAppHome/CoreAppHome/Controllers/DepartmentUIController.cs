@@ -5,8 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CoreAppHome.Models;
 using CoreAppHome.Services;
+using Microsoft.AspNetCore.Authorization;
+
 namespace CoreAppHome.Controllers
 {
+   
     public class DepartmentUIController : Controller
     {
         private readonly IService<Department, int> service;
@@ -14,13 +17,14 @@ namespace CoreAppHome.Controllers
         {
             this.service = service;
         }
+        [Authorize(Policy = "readpolicy")]
         public IActionResult Index()
         {
             var depts = service.GetAsync().Result;
             return View(depts);
         }
 
-
+        [Authorize(Policy = "writepolicy")]
         public IActionResult Create()
         {
             return View(new Department());
