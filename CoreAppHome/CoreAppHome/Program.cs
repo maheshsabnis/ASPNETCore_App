@@ -7,6 +7,9 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using CoreAppHome.Extensions;
+using CoreAppHome.Models;
+using CoreAppHome.Data;
 
 namespace CoreAppHome
 {
@@ -14,7 +17,11 @@ namespace CoreAppHome
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            // CreateWebHostBuilder(args).Build().Run();
+            CreateWebHostBuilder(args).Build()
+                                 .MigrateDatabase<ApplicationDbContext>()
+                                 .MigrateDatabase<AppHomeDbContext>()
+                                 .Run();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>

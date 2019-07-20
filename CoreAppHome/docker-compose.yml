@@ -1,0 +1,17 @@
+version: '3.4'
+
+services:
+  coreapphome:
+    image: ${DOCKER_REGISTRY-}coreapphome
+    build:
+      context: .
+      dockerfile: CoreAppHome/Dockerfile
+    ports:
+          - 42163:80 #Map the Port of Local Machine with port 80 from Image
+    depends_on:
+          - db
+  db:
+    image: "mcr.microsoft.com/mssql/server:2017-latest"
+    environment:
+        SA_PASSWORD: "P@ssw0rd_"
+        ACCEPT_EULA: "Y"
